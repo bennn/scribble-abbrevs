@@ -7,7 +7,6 @@
   sc
   exact
   etal
-  id
   $
   parag
   definition
@@ -64,9 +63,6 @@
 
 (define etal
   (exact "et~al."))
-
-(define (id x)
-  (~a x))
 
 (define ($ . items)
   (apply exact (list "$" items "$")))
