@@ -64,6 +64,14 @@ I think the functions here are useful enough to be online and documented.
   @defproc[(section-ref [tag string?]) element?])]{
   Renders the section number for @racket[tag] prefixed with the word @racket{Section}
    (respectively, @racket{section}).
+
+  These functions assume that the following LaTeX command appears somewhere
+   between the definition of Scribble's @tt{SecRef} (see @secref["builtin-latex" #:doc '(lib "scribblings/scribble/scribble.scrbl")])
+   and the first occurrence of @racket[section-ref]:
+
+  @verbatim{
+    \renewcommand{\SecRef}[2]{#1}
+  }
 }
 
 @defproc[(format-url [url string?]) element?]{
