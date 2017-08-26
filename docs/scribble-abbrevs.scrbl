@@ -14,6 +14,14 @@
 
 I think the functions here are useful enough to be online and documented.
 
+@defproc[(add-commas [r real?]) string?]{
+  Similar to @racket[number->string], but adds commas to numbers with more than three digits.
+
+  @examples[#:eval my-eval
+   (add-commas 42)
+   (add-commas 42000)]
+}
+
 @defproc[(authors [s string?] ...) (or/c string? element?)]{
   Renders a sequence of author names (with Oxford comma).
 

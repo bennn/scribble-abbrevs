@@ -1,6 +1,7 @@
 #lang racket/base
 
 (provide
+  add-commas
   authors
   authors*
   sf
@@ -28,13 +29,36 @@
   (only-in racket/format
     ~a)
   (only-in racket/string
-    string-join)
+    string-join
+    string-split)
   scribble-abbrevs/private/integer-word
   scribble/base
   scribble/core
   scribble/manual)
 
 ;; =============================================================================
+
+(define (add-commas n)
+  (unless (real? n)
+    (raise-argument-error 'add-commas "real?" n))
+  (define str (number->string n))
+  (define str* (string-split str "."))
+  (string-append (add-commas/integer (car str*))
+                 (if (or (null? (cdr str*)) (< (string-length str) 4))
+                   ""
+                   (string-append "." (cadr str*)))))
+
+(define (add-commas/integer str)
+  (define L (string-length str))
+  (string-join
+    (let loop ([i L]
+               [acc '()])
+      (let ([i-3 (- i 3)])
+        (cond
+         [(<= i-3 0)
+          (cons (substring str 0 i) acc)]
+         [else
+          (loop i-3 (cons "," (cons (substring str i-3 i) acc)))]))) ""))
 
 (define (authors . a*)
   (authors* a*))
@@ -124,3 +148,30 @@
   (if title?
     (string-titlecase word)
     word))
+
+;; =============================================================================
+
+(module+ test
+  (require rackunit rackunit-abbrevs)
+
+  (test-case "add-commas"
+    (check-apply* add-commas
+     [1
+      => "1"]
+     [10
+      => "10"]
+     [100
+      => "100"]
+     [1000
+      => "1,000"]
+     [999999
+      => "999,999"]
+     [12
+      => "12"]
+     [1234.56789
+      => "1,234.56789"]
+     [123456789
+      => "123,456,789"]
+     [12456789
+      => "12,456,789"]))
+)
