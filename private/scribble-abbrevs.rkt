@@ -2,6 +2,7 @@
 
 (provide
   add-commas
+  appendix
   authors
   authors*
   sf
@@ -84,6 +85,10 @@
 (define (exact . items)
   (make-element (make-style "relax" '(exact-chars))
                 items))
+
+(define appendix
+  (make-paragraph (make-style 'pretitle '())
+    (make-element (make-style "appendix" '(exact-chars)) '())))
 
 (define etal
   (exact "et~al."))

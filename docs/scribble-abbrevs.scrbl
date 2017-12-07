@@ -22,6 +22,11 @@ I think the functions here are useful enough to be online and documented.
    (add-commas 42000)]
 }
 
+@defidform[appendix]{
+  Typesets @litchar{\appendix} in a @racket[paragraph] with the @racket['pretitle] style.
+  In LaTeX, this marks the current "section" as the start of an appendix.
+}
+
 @defproc[(authors [s string?] ...) (or/c string? element?)]{
   Renders a sequence of author names (with Oxford comma).
 
