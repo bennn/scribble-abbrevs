@@ -72,21 +72,6 @@ I think the functions here are useful enough to be online and documented.
   This usually looks good to me.
 }
 
-@deftogether[(
-  @defproc[(Section-ref [tag string?]) element?]
-  @defproc[(section-ref [tag string?]) element?])]{
-  Renders the section number for @racket[tag] prefixed with the word @racket{Section}
-   (respectively, @racket{section}).
-
-  These functions assume that the following LaTeX command appears somewhere
-   between the definition of Scribble's @tt{SecRef} (see @secref["builtin-latex" #:doc '(lib "scribblings/scribble/scribble.scrbl")])
-   and the first occurrence of @racket[section-ref]:
-
-  @verbatim{
-    \renewcommand{\SecRef}[2]{#1}
-  }
-}
-
 @defproc[(format-url [url string?]) element?]{
   Renders a clickable URL.
   Strips prefixes like @racket{www.} and @racket{http://}.
@@ -118,5 +103,23 @@ I think the functions here are useful enough to be online and documented.
 @defidform[etal])]{
   Each identifier @racket[_id] renders like the string @racket{id}, except
    that it might be prettier (avoid bad line breaks, bad spacing).
+}
+
+@deftogether[(
+  @defproc[(Section-ref [tag string?]) element?]
+  @defproc[(section-ref [tag string?]) element?])]{
+
+  @deprecated[#:what "function" @racket[secref]]
+
+  Renders the section number for @racket[tag] prefixed with the word @racket{Section}
+   (respectively, @racket{section}).
+
+  These functions assume that the following LaTeX command appears somewhere
+   between the definition of Scribble's @tt{SecRef} (see @secref["builtin-latex" #:doc '(lib "scribblings/scribble/scribble.scrbl")])
+   and the first occurrence of @racket[section-ref]:
+
+  @verbatim{
+    \renewcommand{\SecRef}[2]{#1}
+  }
 }
 
