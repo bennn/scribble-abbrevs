@@ -1,5 +1,5 @@
 #lang scribble/manual
-@require[scribble/example (for-label racket/base scribble-abbrevs scribble/manual racket/contract)]
+@require[scribble/example (for-label racket/base scribble-abbrevs scribble/core scribble/manual racket/contract)]
 
 @(define my-eval (make-base-eval '(require scribble-abbrevs)))
 
