@@ -15,6 +15,8 @@
   defn
   Section-ref
   section-ref
+  Sections-ref
+  sections-ref
   x-axes
   y-axes
   x-axis
@@ -110,11 +112,22 @@
 (define (defn term)
   term)
 
+(define (X-ref x s)
+  (elem x ~ (secref s)))
+
+;; TODO these should work like figure-ref
+
 (define (Section-ref s)
-  (elem "Section" ~ (secref s)))
+  (X-ref "Section" s))
+
+(define (Sections-ref s)
+  (X-ref "Sections" s))
 
 (define (section-ref s)
-  (elem "section" ~ (secref s)))
+  (X-ref "section" s))
+
+(define (sections-ref s)
+  (X-ref "sections" s))
 
 (define (axes q)
   (elem (emph q) "-axes"))
