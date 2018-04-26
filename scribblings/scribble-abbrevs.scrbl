@@ -36,7 +36,9 @@ I think the functions here are useful enough to be online and documented.
     @authors["Ed" "Ed" "Eddy"]]
 }
 
-@defproc[(authors* [s* (listof string?)]) element?]{
+@deftogether[(
+  @defproc[(authors* [s* (listof string?)]) element?]
+  @defproc[(oxfordize [s* (listof string?)]) element?])]{
   Same as @racket[(apply authors s*)].
 }
 

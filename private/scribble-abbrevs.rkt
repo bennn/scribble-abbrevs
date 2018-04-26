@@ -5,6 +5,7 @@
   appendix
   authors
   authors*
+  oxfordize
   sf
   sc
   exact
@@ -67,6 +68,9 @@
   (authors* a*))
 
 (define (authors* a*)
+  (oxfordize a*))
+
+(define (oxfordize a*)
   (cond
    [(null? a*)
     (raise-argument-error 'authors "at least one argument" a*)]
