@@ -1,5 +1,14 @@
 #lang scribble/manual
-@require[scribble/example (for-label racket/base scribble-abbrevs scribble/core scribble/manual racket/contract)]
+@require[
+  scribble/example
+  (for-label
+    racket/base
+    scribble-abbrevs
+    scribble/core
+    scribble/manual
+    racket/contract
+    (only-in pict pict?)
+    (only-in pict/code codeblock-pict))]
 
 @(define my-eval (make-base-eval '(require scribble-abbrevs)))
 
@@ -83,24 +92,6 @@
    that it might be prettier (avoid bad line breaks, bad spacing).
 }
 
-@deftogether[(
-  @defproc[(Section-ref [tag string?]) element?]
-  @defproc[(section-ref [tag string?]) element?])]{
-
-  @deprecated[#:what "function" @racket[secref]]
-
-  Renders the section number for @racket[tag] prefixed with the word @racket{Section}
-   (respectively, @racket{section}).
-
-  These functions assume that the following LaTeX command appears somewhere
-   between the definition of Scribble's @tt{SecRef} (see @secref["builtin-latex" #:doc '(lib "scribblings/scribble/scribble.scrbl")])
-   and the first occurrence of @racket[section-ref]:
-
-  @verbatim{
-    \renewcommand{\SecRef}[2]{#1}
-  }
-}
-
 
 @; -----------------------------------------------------------------------------
 @section{LaTeX Renderer Utilities}
@@ -138,6 +129,24 @@
   This usually looks good to me.
 }
 
+@deftogether[(
+  @defproc[(Section-ref [tag string?]) element?]
+  @defproc[(section-ref [tag string?]) element?])]{
+
+  @deprecated[#:what "function" @racket[secref]]
+
+  Renders the section number for @racket[tag] prefixed with the word @racket{Section}
+   (respectively, @racket{section}).
+
+  These functions assume that the following LaTeX command appears somewhere
+   between the definition of Scribble's @tt{SecRef} (see @secref["builtin-latex" #:doc '(lib "scribblings/scribble/scribble.scrbl")])
+   and the first occurrence of @racket[section-ref]:
+
+  @verbatim{
+    \renewcommand{\SecRef}[2]{#1}
+  }
+}
+
 
 @; -----------------------------------------------------------------------------
 @section{Documentation Renderer Utilities}
@@ -157,3 +166,30 @@
 @defproc[(racketfile [filename path-string?]) element?]{
   Typesets the contents of the given file as if its contents were wrapped in a @racket[racketblock].
 }
+
+
+@; -----------------------------------------------------------------------------
+@section{Pict Utilities}
+
+@defmodule[scribble-abbrevs/pict]{
+}
+
+@;@defform[(lined-racketblock datum ...)]{
+@;  Similar to @racket[racketblock], but with line numbers.
+@;}
+
+@defproc[(codeblock-pict/numbers [code string?]
+                                 [#:title title #f]
+                                 [#:start start 1]
+                                 [#:keep-lang-line? keep-lang #t]) pict?]{
+  Similar to @racket[codeblock], but with line numbers.
+}
+
+@defproc[(add-border [p pict?]
+                     [#:margin-top margin-top 2]
+                     [#:margin-bottom margin-bottom 2]
+                     [#:margin-left margin-left 2]
+                     [#:margin-right margin-right 2]) pict?]{
+  Adds a thin black border around the given pict.
+}
+
