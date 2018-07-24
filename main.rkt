@@ -1,3 +1,4 @@
 #lang reprovide
 
-scribble-abbrevs/private/scribble-abbrevs
+scribble-abbrevs/latex
+scribble-abbrevs/scribble

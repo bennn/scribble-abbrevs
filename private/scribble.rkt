@@ -2,22 +2,13 @@
 
 (provide
   add-commas
-  appendix
   authors
   authors*
   oxfordize
-  sf
-  sc
-  exact
-  etal
-  $
-  parag
-  definition
   defn
-  Section-ref
-  section-ref
-  Sections-ref
-  sections-ref
+  parag
+  etal
+  sf
   x-axes
   y-axes
   x-axis
@@ -81,57 +72,22 @@
    [else
     (add-between a* ", " #:before-last ", and ")]))
 
-(define (sf x)
-  (elem #:style "sfstyle" x))
+(define (remove-prefix rx str)
+  (define m (regexp-match (string-append "^" rx "(.*)$") str))
+  (if m (cadr m) str))
 
-(define (sc x #:sup [sup #f])
-  (exact "\\textsc{\\small " x "}"
-    (if sup (format "$^~a$" sup) "")))
+(define (Integer->word i)
+  (integer->word i #:title? #t))
 
-(define (exact . items)
-  (make-element (make-style "relax" '(exact-chars))
-                items))
-
-(define appendix
-  (make-paragraph (make-style 'pretitle '())
-    (make-element (make-style "appendix" '(exact-chars)) '())))
-
-(define etal
-  (exact "et~al."))
-
-(define ($ . items)
-  (apply exact (list "$" items "$")))
-
-(define (parag . x)
-  (apply elem #:style "paragraph" x))
-
-(define (definition term . defn*)
-  (make-paragraph plain
-    (list
-      (exact "\\vspace{1ex}\n")
-      (bold "Definition")
-      (cons (element #f (list " (" (emph term) ") ")) defn*)
-      (exact "\\vspace{1ex}\n"))))
+(define (integer->word i #:title? [title? #f])
+  (define word* (integer->word* i))
+  (define word (string-join word* "-"))
+  (if title?
+    (string-titlecase word)
+    word))
 
 (define (defn term)
   term)
-
-(define (X-ref x s)
-  (elem x ~ (secref s)))
-
-;; TODO these should work like figure-ref
-
-(define (Section-ref s)
-  (X-ref "Section" s))
-
-(define (Sections-ref s)
-  (X-ref "Sections" s))
-
-(define (section-ref s)
-  (X-ref "section" s))
-
-(define (sections-ref s)
-  (X-ref "sections" s))
 
 (define (axes q)
   (elem (emph q) "-axes"))
@@ -151,25 +107,20 @@
 (define y-axis
   (axis "y"))
 
+(define (parag . x)
+  (apply elem #:style "paragraph" x))
+
 (define (format-url str)
   (hyperlink str
     (url
       (remove-prefix "www."
         (remove-prefix "http[^:]*://" str)))))
 
-(define (remove-prefix rx str)
-  (define m (regexp-match (string-append "^" rx "(.*)$") str))
-  (if m (cadr m) str))
+(define (sf x)
+  (elem #:style "sfstyle" x))
 
-(define (Integer->word i)
-  (integer->word i #:title? #t))
-
-(define (integer->word i #:title? [title? #f])
-  (define word* (integer->word* i))
-  (define word (string-join word* "-"))
-  (if title?
-    (string-titlecase word)
-    word))
+(define etal
+  (elem "et" ~ "al."))
 
 ;; =============================================================================
 

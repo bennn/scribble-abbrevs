@@ -8,11 +8,16 @@
 @author{Ben Greenman}
 
 @defmodule[scribble-abbrevs]{
-  Helpers for writing Scribble papers --- that is, Scribble code that
-   generates LaTeX output.
+  Helpers for making Scribble documents.
+  The @racketmodname[scribble-abbrevs] module provides all the bindings documented on this page.
 }
 
-I think the functions here are useful enough to be online and documented.
+
+@section{General Scribble Utilities}
+
+@defmodule[scribble-abbrevs/scribble]{
+  General utilities, for any Scribble document.
+}
 
 @defproc[(add-commas [r real?]) string?]{
   @index["~n"]{Similar} to @racket[number->string], but adds commas to numbers with more than three digits.
@@ -20,11 +25,6 @@ I think the functions here are useful enough to be online and documented.
   @examples[#:eval my-eval
    (add-commas 42)
    (add-commas 42000)]
-}
-
-@defidform[appendix]{
-  Typesets @litchar{\appendix} in a @racket[paragraph] with the @racket['pretitle] style.
-  In LaTeX, this marks the current "section" as the start of an appendix.
 }
 
 @defproc[(authors [s string?] ...) (or/c string? element?)]{
@@ -46,32 +46,8 @@ I think the functions here are useful enough to be online and documented.
   Renders the given content in @racket{sfstyle} (serif-style).
 }
 
-@defproc[(sc [x pre-content?]) element?]{
-  Renders the given content in small caps style.
-}
-
-@defproc[(exact [s string?] ...) element?]{
-  Renders the given strings as-is in the output.
-
-  @examples[#:eval my-eval
-  @exact|{\frac{2}{3}}|]
-}
-
-@defproc[($ [s string?] ...) element?]{
-  Same as @racket[(exact "$" s ... "$")].
-}
-
 @defproc[(parag [s string?] ...) element?]{
   Renders the given strings as a paragraph title.
-}
-
-@defproc[(definition [term string?] [def-elem* pre-content?] ...) paragraph?]{
-  Renders an un-numbered definition for a technical term.
-
-  @examples[#:eval my-eval
-  @definition["rose"]{A rose is a rose is a rose is a rose.}]
-
-  This usually looks good to me.
 }
 
 @defproc[(format-url [url string?]) element?]{
@@ -125,3 +101,39 @@ I think the functions here are useful enough to be online and documented.
   }
 }
 
+
+@; -----------------------------------------------------------------------------
+@section{LaTeX Renderer Utilities}
+
+@defmodule[scribble-abbrevs/latex]{
+  Utilities for Scribble code that generates LaTeX output.
+}
+
+@defidform[appendix]{
+  Typesets @litchar{\appendix} in a @racket[paragraph] with the @racket['pretitle] style.
+  In LaTeX, this marks the current "section" as the start of an appendix.
+}
+
+@defproc[(sc [x pre-content?]) element?]{
+  Renders the given content in small caps style.
+}
+
+@defproc[(exact [s string?] ...) element?]{
+  Renders the given strings as-is in the output.
+
+  @examples[#:eval my-eval
+  @exact|{\frac{2}{3}}|]
+}
+
+@defproc[($ [s string?] ...) element?]{
+  Same as @racket[(exact "$" s ... "$")].
+}
+
+@defproc[(definition [term string?] [def-elem* pre-content?] ...) paragraph?]{
+  Renders an un-numbered definition for a technical term.
+
+  @examples[#:eval my-eval
+  @definition["rose"]{A rose is a rose is a rose is a rose.}]
+
+  This usually looks good to me.
+}
