@@ -137,3 +137,23 @@
 
   This usually looks good to me.
 }
+
+
+@; -----------------------------------------------------------------------------
+@section{Documentation Renderer Utilities}
+
+@defmodule[scribble-abbrevs/manual]{
+  Utilities for Scribble code that generates Racket documentation.
+}
+
+@defproc[(tech/guide [pre-content pre-content?] ...) element?]{
+  Similar to @racket[tech], but links to @other-manual['(lib "scribblings/guide/guide.scrbl")].
+}
+
+@defproc[(tech/reference [pre-content pre-content?] ...) element?]{
+  Similar to @racket[tech], but links to @other-manual['(lib "scribblings/reference/reference.scrbl")].
+}
+
+@defproc[(racketfile [filename path-string?]) element?]{
+  Typesets the contents of the given file as if its contents were wrapped in a @racket[racketblock].
+}
