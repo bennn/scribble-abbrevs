@@ -112,7 +112,7 @@
 
 (define (format-url str)
   (hyperlink str
-    (url
+    (make-element 'url
       (remove-prefix "www."
         (remove-prefix "http[^:]*://" str)))))
 
