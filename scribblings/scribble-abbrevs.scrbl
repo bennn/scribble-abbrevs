@@ -50,6 +50,10 @@
   @defproc[(oxfordize [s* (listof string?)]) element?])]{
   Same as @racket[(apply authors s*)].
 }
+@margin-note{Always use the Oxford comma. Remember
+@hyperlink["https://www.nytimes.com/2017/03/16/us/oxford-comma-lawsuit.html"]{the
+Maine truck drivers}!
+(@hyperlink["https://www.nytimes.com/2018/02/09/us/oxford-comma-maine.html"]{settlement})}
 
 @defproc[(sf [x pre-content?]) element?]{
   Renders the given content in @racket{sfstyle} (serif-style).
