@@ -187,6 +187,14 @@ Maine truck drivers}!
                                  [#:start start 1]
                                  [#:keep-lang-line? keep-lang #t]) pict?]{
   Similar to @racket[codeblock], but with line numbers.
+
+  @examples[#:eval (make-base-eval '(require racket/string))
+    (require scribble-abbrevs/pict)
+    (codeblock-pict/numbers
+      (string-join '("#lang racket/base"
+                     "(require scribble-abbrevs/pict)"
+                     "(codeblock-pict/numbers \"(+ 2 \n3)\")")
+                   "\n"))]
 }
 
 @defproc[(add-border [p pict?]
