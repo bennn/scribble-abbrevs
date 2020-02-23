@@ -7,7 +7,7 @@
     scribble/core
     scribble/manual
     racket/contract
-    (only-in pict pict?)
+    (only-in pict pict? frame)
     (only-in pict/code codeblock-pict))]
 
 @(define my-eval (make-base-eval '(require scribble-abbrevs)))
@@ -203,5 +203,7 @@ Maine truck drivers}!
                      [#:margin-left margin-left 2]
                      [#:margin-right margin-right 2]) pict?]{
   Adds a thin black border around the given pict.
+
+  See also @racket[frame].
 }
 
