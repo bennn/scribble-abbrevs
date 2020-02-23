@@ -68,7 +68,7 @@ Maine truck drivers}!
   Strips prefixes like @racket{www.} and @racket{http://}.
 }
 
-@defproc[(integer->word [i exact-nonnegative-integer?] [#:title? title? boolean? #false]) string?]{
+@defproc[(integer->word [i exact-integer?] [#:title? title? boolean? #false]) string?]{
   Returns the English word for the given integer.
 
   @examples[#:eval my-eval
@@ -80,7 +80,7 @@ Maine truck drivers}!
   The current implementation fails unless @racket[(abs i)] is less than 1 quadrillion.
 }
 
-@defproc[(Integer->word [i exact-nonnegative-integer?]) string?]{
+@defproc[(Integer->word [i exact-integer?]) string?]{
   Alias for @racket[(integer->word i #:title? #true)].
 }
 
