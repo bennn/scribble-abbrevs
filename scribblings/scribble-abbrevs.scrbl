@@ -86,7 +86,7 @@ Maine truck drivers}!
 
 @defproc[(natural->roman-numeral [n exact-positive-integer?]) string?]{
   @margin-note{Wikipedia: @hyperlink["https://en.wikipedia.org/wiki/Roman_numerals"]{roman numeral}}
-  Converts a natural number to a roman numeral.
+  Converts a positive number to a roman numeral.
 
   @examples[#:eval my-eval
     @natural->roman-numeral[2]
@@ -98,7 +98,7 @@ Maine truck drivers}!
 }
 
 @defproc[(natural->roman-symbol* [n exact-positive-integer?]) (listof roman-symbol?)]{
-  Convert a number to a sequence of roman symbols.
+  Convert a positive number to a sequence of roman symbols.
 
   @examples[#:eval my-eval
     (natural->roman-symbol* 44)
@@ -106,7 +106,7 @@ Maine truck drivers}!
 }
 
 @defproc[(roman-symbol? [x any/c]) boolean?]{
-  Predicate for symbols that correpond to a roman numeral value.
+  Predicate for symbols that correspond to a roman numeral value.
 
   @examples[#:eval my-eval
     (roman-symbol? 'I)
