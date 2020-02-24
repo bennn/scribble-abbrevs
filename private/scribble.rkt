@@ -16,6 +16,9 @@
   format-url
   Integer->word
   integer->word
+  natural->roman-numeral
+  natural->roman-symbol*
+  roman-symbol?
 )
 
 (require
@@ -27,6 +30,7 @@
     string-join
     string-split)
   scribble-abbrevs/private/integer-word
+  scribble-abbrevs/private/roman-numeral
   scribble/base
   scribble/core
   scribble/manual)
@@ -85,6 +89,10 @@
   (if title?
     (string-titlecase word)
     word))
+
+(define (natural->roman-numeral n)
+  (define r* (natural->roman-symbol* n))
+  (apply string-append (map symbol->string r*)))
 
 (define (defn term)
   term)

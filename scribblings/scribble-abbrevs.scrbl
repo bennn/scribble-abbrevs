@@ -84,6 +84,38 @@ Maine truck drivers}!
   Alias for @racket[(integer->word i #:title? #true)].
 }
 
+@defproc[(natural->roman-numeral [n exact-positive-integer?]) string?]{
+  @margin-note{Wikipedia: @hyperlink["https://en.wikipedia.org/wiki/Roman_numerals"]{roman numeral}}
+  Converts a natural number to a roman numeral.
+
+  @examples[#:eval my-eval
+    @natural->roman-numeral[2]
+    @natural->roman-numeral[4]
+    @natural->roman-numeral[54]
+    @natural->roman-numeral[101]
+    @natural->roman-numeral[1555]
+  ]
+}
+
+@defproc[(natural->roman-symbol* [n exact-positive-integer?]) (listof roman-symbol?)]{
+  Convert a number to a sequence of roman symbols.
+
+  @examples[#:eval my-eval
+    (natural->roman-symbol* 44)
+  ]
+}
+
+@defproc[(roman-symbol? [x any/c]) boolean?]{
+  Predicate for symbols that correpond to a roman numeral value.
+
+  @examples[#:eval my-eval
+    (roman-symbol? 'I)
+    (roman-symbol? 'II)
+    (andmap roman-symbol? '(I V X L C D M))
+    (roman-symbol? 17)
+  ]
+}
+
 @; -----------------------------------------------------------------------------
 
 @deftogether[(
