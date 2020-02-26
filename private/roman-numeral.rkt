@@ -6,7 +6,9 @@
     [roman-symbol?
       (-> any/c boolean?)]
     [natural->roman-symbol*
-      (-> exact-positive-integer? (and/c (not/c null?) (listof roman-symbol?)))]))
+      (-> exact-positive-integer? (and/c (not/c null?) (listof roman-symbol?)))]
+    [roman-numeral->natural
+      (-> (or/c string? (listof roman-symbol?)) exact-nonnegative-integer?)]))
 
 (require
   (only-in racket/list make-list)
@@ -79,6 +81,44 @@
     ((V) (values 4 'I))
     (else #f)))
 
+(define (roman-numeral->natural x)
+  (cond
+    [((listof roman-symbol?) x)
+     (roman-symbol*->natural x)]
+    [(and (string? x) (string->roman-symbol* x))
+     => roman-symbol*->natural]
+    [else
+     (raise-argument-error 'roman-numeral->natural "roman numeral?" x)]))
+
+(define (string->roman-symbol* pre-str)
+  (define str (string-upcase pre-str))
+  (define sym*
+    (for/list ((c (in-string str)))
+      (char->roman-symbol c)))
+  (cond
+    [(andmap values sym*)
+     sym*]
+    [(or (string=? str "NULLA") (string=? str "N"))
+     '()]
+    [else
+     #f]))
+
+(define (char->roman-symbol c)
+  (define sym (string->symbol (string c)))
+  (and (roman-symbol? sym) sym))
+
+(define (roman-symbol*->natural r*)
+  (for/fold ((acc 0)
+             (prev #f)
+             #:result (+ acc (or prev 0)))
+            ((r (in-list r*)))
+    (define n (roman-symbol->natural r))
+    (if prev
+      (if (< prev n)
+        (values (+ acc (- n prev)) #f)
+        (values (+ acc prev) n))
+      (values acc n))))
+
 ;; -----------------------------------------------------------------------------
 
 (module+ test
@@ -120,5 +160,29 @@
     (check-equal? (natural->roman-symbol* 1900) '(M C M))
     (check-equal? (natural->roman-symbol* 1950) '(M C M L))
     (check-equal? (natural->roman-symbol* 1500) '(M D)))
+
+  (test-case "roman-numeral->natural"
+    (check-equal? (roman-numeral->natural "nulla") 0)
+    (check-equal? (roman-numeral->natural "V") 5)
+    (check-equal? (roman-numeral->natural '(V)) 5)
+    (check-equal? (roman-numeral->natural "IIII") 4)
+    (check-equal? (roman-numeral->natural "XLIX") 49)
+    (check-equal? (roman-numeral->natural '()) 0)
+    (check-equal? (roman-numeral->natural '(I I)) 2)
+    (check-equal? (roman-numeral->natural '(I V)) 4)
+    (check-equal? (roman-numeral->natural '(L I V)) 54)
+    (check-equal? (roman-numeral->natural '(C I)) 101)
+    (check-equal? (roman-numeral->natural '(X X X I X)) 39)
+    (check-equal? (roman-numeral->natural '(C C X L V I)) 246)
+    (check-equal? (roman-numeral->natural '(D C C L X X X I X)) 789)
+    (check-equal? (roman-numeral->natural '(M M C D X X I)) 2421)
+    (check-equal? (roman-numeral->natural '(C L X)) 160)
+    (check-equal? (roman-numeral->natural '(C C V I I)) 207)
+    (check-equal? (roman-numeral->natural '(M I X)) 1009)
+    (check-equal? (roman-numeral->natural '(M L X V I)) 1066)
+    (check-equal? (roman-numeral->natural '(M D C C L X X V I)) 1776)
+    (check-equal? (roman-numeral->natural '(M C M L I V)) 1954)
+    (check-equal? (roman-numeral->natural '(M M X I V)) 2014)
+    (check-equal? (roman-numeral->natural '(M M X X)) 2020))
 
 )

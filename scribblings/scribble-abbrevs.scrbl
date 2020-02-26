@@ -86,7 +86,7 @@ Maine truck drivers}!
 
 @defproc[(natural->roman-numeral [n exact-positive-integer?]) string?]{
   @margin-note{Wikipedia: @hyperlink["https://en.wikipedia.org/wiki/Roman_numerals"]{roman numeral}}
-  Converts a positive number to a roman numeral.
+  Converts a positive number to a roman numeral in the standard subtractive form.
 
   @examples[#:eval my-eval
     @natural->roman-numeral[2]
@@ -94,6 +94,19 @@ Maine truck drivers}!
     @natural->roman-numeral[54]
     @natural->roman-numeral[101]
     @natural->roman-numeral[1555]
+  ]
+}
+
+@defproc[(roman-numeral->natural [x (or/c string? (listof roman-symbol?))]) exact-nonnegative-integer?]{
+  Converts a roman numeral to a natural number.
+  Accepts subtractive or additive numbers,
+   and the strings @racket{nulla} and @racket{N}.
+
+  @examples[#:eval my-eval
+    @roman-numeral->natural["V"]
+    @roman-numeral->natural["IIII"]
+    @roman-numeral->natural["XLIX"]
+    @roman-numeral->natural["nulla"]
   ]
 }
 

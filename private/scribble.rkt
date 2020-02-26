@@ -17,6 +17,7 @@
   Integer->word
   integer->word
   natural->roman-numeral
+  roman-numeral->natural
   natural->roman-symbol*
   roman-symbol?
 )
