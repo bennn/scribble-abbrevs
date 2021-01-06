@@ -154,6 +154,16 @@ Maine truck drivers}!
   In LaTeX, this marks the current "section" as the start of an appendix.
 }
 
+@defidform[noindent]{
+  Typesets as @litchar{\noindent{}}.
+  Good for suppressing LaTeX paragraph indentation.
+
+  @verbatim|{
+  .... end of previous paragraph.
+
+  @|noindent|Beginning of un-indented paragraph.}|
+}
+
 @defproc[(sc [x pre-content?]) element?]{
   Renders the given content in small caps style.
 }

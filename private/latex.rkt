@@ -3,6 +3,7 @@
 (provide
   $
   appendix
+  noindent
   definition
   exact
   Section-ref
@@ -29,6 +30,9 @@
 (define appendix
   (make-paragraph (make-style 'pretitle '())
     (make-element (make-style "appendix" '(exact-chars)) '())))
+
+(define noindent
+  (make-element (make-style "noindent" '()) ""))
 
 (define ($ . items)
   (apply exact (list "$" items "$")))
