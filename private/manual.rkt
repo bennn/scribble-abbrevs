@@ -38,7 +38,7 @@
           (quote str*) ...)))]))
 
 (define (tech/guide . text)
-  (keyword-apply tech '(#:doc) '((lib "scribblings/guide/guide.scrbl")) text))
+  (apply tech text #:doc '(lib "scribblings/guide/guide.scrbl")))
 
 (define (tech/reference . text)
-  (keyword-apply tech '(#:doc) '((lib "scribblings/reference/reference.scrbl")) text))
+  (apply tech text #:doc '(lib "scribblings/reference/reference.scrbl")))
