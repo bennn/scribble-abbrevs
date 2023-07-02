@@ -5,4 +5,4 @@
 (define pkg-desc "Scribble helpers")
 (define version "0.0")
 (define pkg-authors '(ben))
-(define scribblings '(("scribblings/scribble-abbrevs.scrbl" () (tool-library))))
+(define scribblings '(("scribblings/scribble-abbrevs.scrbl" () ("Scribble Libraries"))))
